@@ -2,6 +2,7 @@ package com.stockcontrolathome.authentication.controller;
 
 import com.stockcontrolathome.authentication.dto.user.request.RegisterUserRequest;
 import com.stockcontrolathome.authentication.service.AuthService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -19,7 +20,7 @@ public class AuthController {
     private AuthService authService;
 
     @PostMapping(value = AuthController.REGISTER_PATH, consumes = { MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<Void> registerUser(@RequestBody RegisterUserRequest registerUserRequest) {
+    public ResponseEntity<Void> registerUser(@RequestBody @Valid  RegisterUserRequest registerUserRequest) {
         authService.registerUser(registerUserRequest);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
