@@ -1,6 +1,7 @@
 package com.stockcontrolathome.authentication.mapper;
 
 import com.stockcontrolathome.authentication.dto.user.request.RegisterUserRequest;
+import com.stockcontrolathome.authentication.dto.user.response.AllUserInformationResponse;
 import com.stockcontrolathome.authentication.entity.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -21,6 +22,7 @@ public abstract class UserMapper {
             @Mapping(target = "updated", ignore = true ),
     })
     public abstract User registerUserRequestToUserEntity(RegisterUserRequest registerUserRequest);
+
 
 
 

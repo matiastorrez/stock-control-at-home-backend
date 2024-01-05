@@ -40,6 +40,25 @@ public class GlobalExceptionHandler {
 		return new ResponseEntity<>(dataError, status);
 	}
 
+	@ExceptionHandler(NonUserWithThisEmailException.class)
+	public ResponseEntity<HashMap<String, DetailsError>> nonUserWithThisEmailExceptionExceptionHandler(NonUserWithThisEmailException exception, WebRequest webRequest) {
+		logger.info("estoy en NonUserWithThisEmailException");
+		return buildErrorResponse(exception, webRequest, HttpStatus.GONE, exception.getMessage());
+	}
+
+	@ExceptionHandler(ConfirmRegistrationTokenNotFoundException.class)
+	public ResponseEntity<HashMap<String, DetailsError>> confirmRegistrationTokenNotFoundExceptionHandler(ConfirmRegistrationTokenNotFoundException exception, WebRequest webRequest) {
+		logger.info("estoy en ConfirmRegistrationTokenNotFoundException");
+		return buildErrorResponse(exception, webRequest, HttpStatus.NOT_FOUND, exception.getMessage());
+	}
+
+	@ExceptionHandler(NotificationFailureException.class)
+	public ResponseEntity<HashMap<String, DetailsError>> notificationFailureExceptionHandler(NotificationFailureException exception, WebRequest webRequest) {
+		logger.info("estoy en NotificationFailureException");
+		return buildErrorResponse(exception, webRequest, HttpStatus.INTERNAL_SERVER_ERROR, exception.getMessage());
+	}
+
+
 	@ExceptionHandler(NonExistentRoleException.class)
 	public ResponseEntity<HashMap<String, DetailsError>> nonExistentRoleExceptionHandler(NonExistentRoleException exception, WebRequest webRequest) {
 		logger.info("estoy en NonExistentRoleException");

@@ -8,6 +8,7 @@ import com.stockcontrolathome.authentication.enums.ERole;
 import com.stockcontrolathome.authentication.enums.UserState;
 import com.stockcontrolathome.authentication.exception.ExistingEmailException;
 import com.stockcontrolathome.authentication.exception.NeedToConfirmException;
+import com.stockcontrolathome.authentication.exception.NonUserWithThisEmailException;
 import com.stockcontrolathome.authentication.mapper.RoleMapper;
 import com.stockcontrolathome.authentication.mapper.UserMapper;
 import com.stockcontrolathome.authentication.repository.user.custom.UserRepositoryCustom;
@@ -42,9 +43,16 @@ public class UserServiceImpl implements UserService {
 
         Role roleUser = this.roleMapper.roleResponseToRoleEntity(roleService.getRoleByERole(ERole.ROLE_USER));
         newUser.getRoles().add(roleUser);
-        newUser.setState(UserState.REGISTRADO);
+        newUser.setState(UserState.FALTA_CONFIRMAR_REGISTRO);
 
 
         userRepositoryCustom.createUser(newUser);
+    }
+
+    @Override
+    public void modifyUserToConfirmRegister(String email) {
+        User userObtained = userRepositoryCustom.getUserByEmail(email).orElseThrow(() -> new NonUserWithThisEmailException("No existe un usuario vinculado con el email: "+ email));
+        userObtained.setState(UserState.REGISTRADO);
+        this.userRepositoryCustom.createUser(userObtained);
     }
 }
