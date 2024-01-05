@@ -32,7 +32,7 @@ public class User {
     @Column(name="lastname", nullable = false)
     private String lastname;
 
-    @Column(name="email", nullable = false)
+    @Column(name="email", nullable = false, unique = true)
     private String email;
 
     @ManyToMany(fetch = FetchType.EAGER)
