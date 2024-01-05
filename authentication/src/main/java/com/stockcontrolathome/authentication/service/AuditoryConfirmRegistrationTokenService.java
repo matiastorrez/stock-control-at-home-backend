@@ -1,0 +1,8 @@
+package com.stockcontrolathome.authentication.service;
+
+import com.stockcontrolathome.authentication.dto.auditoryconfirmregistrationtoken.request.AuditoryConfirmRegistrationTokenRequest;
+
+public interface AuditoryConfirmRegistrationTokenService {
+
+    void saveAuditoryConfirmRegistrationToken(AuditoryConfirmRegistrationTokenRequest auditoryConfirmRegistrationTokenRequest);
+}

@@ -5,4 +5,6 @@ import com.stockcontrolathome.authentication.dto.user.request.RegisterUserReques
 public interface UserService {
 
     void registerUser(RegisterUserRequest registerUserRequest);
+
+    void modifyUserToConfirmRegister(String email);
 }
