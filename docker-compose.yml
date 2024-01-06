@@ -1,18 +1,28 @@
 version: '3'
 
 services:
-  ##postgres database for Inventory
   db-authentication:
     container_name: db-authentication
     image: postgres:15.2
     restart: unless-stopped
     environment:
+      DATABASE_HOST: 127.0.0.1
       POSTGRES_DB: ms_authentication
       POSTGRES_USER: stockcontrolathome
       POSTGRES_PASSWORD: stockcontrolathome
     ports:
-      - 5431:5431
+      - 5432:5432
     expose:
-      - 5431
-    command: -p 5431
+      - 5432
+    command: -p 5432
 
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin_container
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "5050:80"
+    depends_on:
+      - db-authentication
