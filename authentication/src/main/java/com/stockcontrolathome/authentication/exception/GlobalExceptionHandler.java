@@ -41,8 +41,14 @@ public class GlobalExceptionHandler {
 	}
 
 	@ExceptionHandler(NonUserWithThisEmailException.class)
-	public ResponseEntity<HashMap<String, DetailsError>> nonUserWithThisEmailExceptionExceptionHandler(NonUserWithThisEmailException exception, WebRequest webRequest) {
+	public ResponseEntity<HashMap<String, DetailsError>> nonUserWithThisEmailExceptionHandler(NonUserWithThisEmailException exception, WebRequest webRequest) {
 		logger.info("estoy en NonUserWithThisEmailException");
+		return buildErrorResponse(exception, webRequest, HttpStatus.NOT_FOUND, exception.getMessage());
+	}
+
+	@ExceptionHandler(ConfirmRegistrationTokenExpiratedException.class)
+	public ResponseEntity<HashMap<String, DetailsError>> confirmRegistrationTokenExpiratedExceptionHandler(ConfirmRegistrationTokenExpiratedException exception, WebRequest webRequest) {
+		logger.info("estoy en ConfirmRegistrationTokenExpiratedException");
 		return buildErrorResponse(exception, webRequest, HttpStatus.GONE, exception.getMessage());
 	}
 
@@ -76,6 +82,13 @@ public class GlobalExceptionHandler {
 		logger.info("estoy en NeedToConfirmException");
 		return buildErrorResponse(exception, webRequest, HttpStatus.CONFLICT, exception.getMessage());
 	}
+
+	@ExceptionHandler(NeedToConfirmBeforeLoginException.class)
+	public ResponseEntity<HashMap<String, DetailsError>> needToConfirmBeforeLoginExceptionHandler(NeedToConfirmBeforeLoginException exception, WebRequest webRequest) {
+		logger.info("estoy en NeedToConfirmBeforeLoginException");
+		return buildErrorResponse(exception, webRequest, HttpStatus.FORBIDDEN, exception.getMessage());
+	}
+
 
 
 	@ExceptionHandler(JwtException.class)

@@ -1,16 +1,16 @@
 package com.stockcontrolathome.authentication.entity;
 
-import com.stockcontrolathome.authentication.enums.ConfirmRegistrationTokenState;
+import com.stockcontrolathome.authentication.enums.EConfirmRegistrationTokenState;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 
 @Getter
 @Setter
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "ConfirmRegistrationToken")
 public class ConfirmRegistrationToken {
@@ -25,18 +25,14 @@ public class ConfirmRegistrationToken {
     private String token;
 
     @Column(name = "created_date")
-    @CreationTimestamp
     private LocalDateTime createdDate;
 
     @Column(name = "expired_date", nullable = false)
     private LocalDateTime expiredDate;
 
-    @Column(name = "confirmation_date")
-    private LocalDateTime confirmationDate;
-
     @Enumerated(value = EnumType.STRING)
     @Column(name = "state", nullable = false)
-    private ConfirmRegistrationTokenState state;
+    private EConfirmRegistrationTokenState state;
 
     @Column(name = "email", nullable = false)
     private String email;

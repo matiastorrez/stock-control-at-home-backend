@@ -16,7 +16,6 @@ public abstract class ConfirmRegistrationTokenMapper {
             @Mapping(source = "confirmRegistrationTokenRequest.token", target = "token"),
             @Mapping(source = "confirmRegistrationTokenRequest.createdDate", target = "createdDate"),
             @Mapping(source = "confirmRegistrationTokenRequest.expiredDate", target = "expiredDate"),
-            @Mapping(source = "confirmRegistrationTokenRequest.confirmationDate", target = "confirmationDate"),
             @Mapping(source = "confirmRegistrationTokenRequest.state", target = "state"),
             @Mapping(source = "confirmRegistrationTokenRequest.email", target = "email"),
     })
@@ -27,7 +26,6 @@ public abstract class ConfirmRegistrationTokenMapper {
             @Mapping(source = "confirmRegistrationToken.token", target = "token"),
             @Mapping(source = "confirmRegistrationToken.createdDate", target = "createdDate"),
             @Mapping(source = "confirmRegistrationToken.expiredDate", target = "expiredDate"),
-            @Mapping(source = "confirmRegistrationToken.confirmationDate", target = "confirmationDate"),
             @Mapping(source = "confirmRegistrationToken.state", target = "state"),
             @Mapping(source = "confirmRegistrationToken.email", target = "email"),
     })
@@ -35,15 +33,16 @@ public abstract class ConfirmRegistrationTokenMapper {
 
 
     @Mappings({
-            @Mapping(source = "confirmRegistrationTokenResponse.confirmRegistrationTokenId", target = "idConfirmRegistrationToken"),
-            @Mapping(source = "confirmRegistrationTokenResponse.token", target = "token"),
-            @Mapping(source = "confirmRegistrationTokenResponse.createdDate", target = "createdDate"),
-            @Mapping(source = "confirmRegistrationTokenResponse.expiredDate", target = "expiredDate"),
-            @Mapping(source = "confirmRegistrationTokenResponse.confirmationDate", target = "confirmationDate"),
-            @Mapping(source = "confirmRegistrationTokenResponse.state", target = "state"),
-            @Mapping(source = "confirmRegistrationTokenResponse.email", target = "email"),
+            @Mapping(source = "confirmRegistrationToken.idConfirmRegistrationToken", target = "idConfirmRegistrationToken"),
+            @Mapping(source = "confirmRegistrationToken.token", target = "token"),
+            @Mapping(source = "confirmRegistrationToken.createdDate", target = "createdDate"),
+            @Mapping(source = "confirmRegistrationToken.expiredDate", target = "expiredDate"),
+            @Mapping(source = "confirmRegistrationToken.state", target = "state"),
+            @Mapping(source = "confirmRegistrationToken.email", target = "email"),
+            @Mapping(target = "confirmationDate", ignore = true),
+
     })
-    public abstract AuditoryConfirmRegistrationTokenRequest confirmRegistrationTokenEntityToConfirmRegistrationTokenResponse(ConfirmRegistrationTokenResponse confirmRegistrationTokenResponse);
+    public abstract AuditoryConfirmRegistrationTokenRequest confirmRegistrationTokenEntityToAuditoryConfirmRegistrationTokenRequest(ConfirmRegistrationToken confirmRegistrationToken);
 
 
 

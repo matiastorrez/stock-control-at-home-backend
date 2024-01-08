@@ -1,7 +1,7 @@
 package com.stockcontrolathome.authentication.service.impl;
 
-import com.stockcontrolathome.authentication.dto.role.response.RoleResponse;
 import com.stockcontrolathome.authentication.dto.user.request.RegisterUserRequest;
+import com.stockcontrolathome.authentication.dto.user.response.UserInformationResponse;
 import com.stockcontrolathome.authentication.entity.Role;
 import com.stockcontrolathome.authentication.entity.User;
 import com.stockcontrolathome.authentication.enums.ERole;
@@ -55,4 +55,11 @@ public class UserServiceImpl implements UserService {
         userObtained.setState(UserState.REGISTRADO);
         this.userRepositoryCustom.createUser(userObtained);
     }
+
+    @Override
+    public UserInformationResponse getUserByEmail(String email) {
+        User userObtained = userRepositoryCustom.getUserByEmail(email).orElseThrow(() -> new NonUserWithThisEmailException("No existe un usuario vinculado con el email: " + email));
+        return this.userMapper.userEntityToUserInformationResponse(userObtained);
+    }
+
 }

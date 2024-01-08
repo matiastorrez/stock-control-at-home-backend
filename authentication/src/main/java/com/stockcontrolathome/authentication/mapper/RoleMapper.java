@@ -6,6 +6,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 
+import java.util.Set;
+
 @Mapper(componentModel = "spring")
 public abstract class RoleMapper {
 
@@ -14,6 +16,8 @@ public abstract class RoleMapper {
             @Mapping(source = "role.ERole", target = "roleName"),
     })
     public abstract RoleResponse roleEntityToRoleResponse(Role role);
+    public abstract Set<RoleResponse> roleEntityToRoleResponse(Set<Role> role);
+
 
     @Mappings({
             @Mapping(source = "roleResponse.roleId", target = "roleId"),
