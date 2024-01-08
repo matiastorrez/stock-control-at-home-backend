@@ -1,8 +1,9 @@
 package com.stockcontrolathome.authentication.service;
 
 import com.stockcontrolathome.authentication.dto.auditoryconfirmregistrationtoken.request.AuditoryConfirmRegistrationTokenRequest;
+import com.stockcontrolathome.authentication.enums.EConfirmRegistrationTokenState;
 
 public interface AuditoryConfirmRegistrationTokenService {
 
-    void saveAuditoryConfirmRegistrationToken(AuditoryConfirmRegistrationTokenRequest auditoryConfirmRegistrationTokenRequest);
+    void saveAuditoryConfirmRegistrationToken(AuditoryConfirmRegistrationTokenRequest auditoryConfirmRegistrationTokenRequest, EConfirmRegistrationTokenState newState);
 }

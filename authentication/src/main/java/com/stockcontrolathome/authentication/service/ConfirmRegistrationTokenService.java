@@ -1,17 +1,19 @@
 package com.stockcontrolathome.authentication.service;
 
-import com.stockcontrolathome.authentication.dto.confirmregistrationtoken.request.ConfirmRegistrationTokenRequest;
 import com.stockcontrolathome.authentication.dto.confirmregistrationtoken.response.ConfirmRegistrationTokenResponse;
-import com.stockcontrolathome.authentication.enums.ConfirmRegistrationTokenState;
+import com.stockcontrolathome.authentication.enums.EConfirmRegistrationTokenState;
 
 public interface ConfirmRegistrationTokenService {
 
 
-    ConfirmRegistrationTokenResponse getConfirmRegistrationTokenByTokenAndEmailAndState(String token, String email, ConfirmRegistrationTokenState state);
+    ConfirmRegistrationTokenResponse getConfirmRegistrationTokenByTokenAndEmailAndState(String token, String email, EConfirmRegistrationTokenState state);
+
+    ConfirmRegistrationTokenResponse getConfirmRegistrationTokenByEmail(String email);
 
 
-    void createConfirmRegistrationToken(ConfirmRegistrationTokenRequest confirmRegistrationTokenRequest);
+    ConfirmRegistrationTokenResponse createConfirmRegistrationToken(String email);
+    ConfirmRegistrationTokenResponse renewConfirmRegistrationToken(String email, String oldToken, EConfirmRegistrationTokenState oldTokenNewState);
 
-    void deleteUsedRegistrationConfirmationToken(String token, String email);
+    void deleteUsedRegistrationConfirmationToken(String token, String email, EConfirmRegistrationTokenState newState);
 
 }

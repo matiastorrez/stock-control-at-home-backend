@@ -1,7 +1,7 @@
 package com.stockcontrolathome.authentication.dto.confirmregistrationtoken.response;
 
 
-import com.stockcontrolathome.authentication.enums.ConfirmRegistrationTokenState;
+import com.stockcontrolathome.authentication.enums.EConfirmRegistrationTokenState;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -19,9 +19,7 @@ public class ConfirmRegistrationTokenResponse {
 
     private LocalDateTime expiredDate;
 
-    private LocalDateTime confirmationDate;
-
-    private ConfirmRegistrationTokenState state;
+    private EConfirmRegistrationTokenState state;
 
     private String email;
 

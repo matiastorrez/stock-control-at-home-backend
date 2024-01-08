@@ -1,6 +1,6 @@
 package com.stockcontrolathome.authentication.entity;
 
-import com.stockcontrolathome.authentication.enums.ConfirmRegistrationTokenState;
+import com.stockcontrolathome.authentication.enums.EConfirmRegistrationTokenState;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,18 +28,17 @@ public class AuditoryConfirmRegistrationToken {
     private String token;
 
     @Column(name = "created_date")
-    @CreationTimestamp
     private LocalDateTime createdDate;
 
     @Column(name = "expired_date", nullable = false)
     private LocalDateTime expiredDate;
 
-    @Column(name = "confirmation_date")
-    private LocalDateTime confirmationDate;
+    @Column(name = "sentenced_date",nullable = false)
+    private LocalDateTime sentencedDate;
 
     @Enumerated(value = EnumType.STRING)
     @Column(name = "state", nullable = false)
-    private ConfirmRegistrationTokenState state;
+    private EConfirmRegistrationTokenState state;
 
     @Column(name = "email", nullable = false)
     private String email;
