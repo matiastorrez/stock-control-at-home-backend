@@ -9,7 +9,7 @@ public interface AuthService {
 
     void registerUser(RegisterUserRequest registerUserRequest);
 
-    void confirmRegistration(NewUserConfirmsRegistration newUserConfirmsRegistration);
+    JwtResponse confirmRegistration(NewUserConfirmsRegistration newUserConfirmsRegistration);
 
     JwtResponse loginUser(LoginUserRequest user);
 

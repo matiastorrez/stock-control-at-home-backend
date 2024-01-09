@@ -31,10 +31,10 @@ public class AuthController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @PostMapping(value = AuthController.CONFIRM_REGISTER_PATH, consumes = { MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<Void> confirmRegister(@RequestBody @Valid NewUserConfirmsRegistration newUserConfirmsRegistration) {
-        authService.confirmRegistration(newUserConfirmsRegistration);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    @PostMapping(value = AuthController.CONFIRM_REGISTER_PATH, consumes = { MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<JwtResponse> confirmRegister(@RequestBody @Valid NewUserConfirmsRegistration newUserConfirmsRegistration) {
+
+        return new ResponseEntity<>(this.authService.confirmRegistration(newUserConfirmsRegistration),HttpStatus.OK);
     }
 
     @PostMapping(value = AuthController.LOGIN_USER_PATH, consumes = { MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})

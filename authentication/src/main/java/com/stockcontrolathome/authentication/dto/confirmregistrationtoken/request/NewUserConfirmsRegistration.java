@@ -15,6 +15,9 @@ public class NewUserConfirmsRegistration {
     @NotNull(message = "El email no puede ser nulo")
     private String email;
 
+    @NotBlank(message = "La password no puede ser nulo ni vacío")
+    private String password;
+
     @NotBlank(message = "El codigo no puede ser nulo ni vacío")
     private String token;
 
