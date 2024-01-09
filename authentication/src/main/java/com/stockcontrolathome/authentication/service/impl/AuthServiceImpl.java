@@ -47,17 +47,25 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     @Transactional
-    public void confirmRegistration(NewUserConfirmsRegistration newUserConfirmsRegistration) {
+    public JwtResponse confirmRegistration(NewUserConfirmsRegistration newUserConfirmsRegistration) {
 
+        //verificamos si existe la confirmacion con el token y el email que se mando
         ConfirmRegistrationTokenResponse confirmRegistrationTokenResponse = this.confirmRegistrationTokenService.getConfirmRegistrationTokenByTokenAndEmailAndState(newUserConfirmsRegistration.getToken(), newUserConfirmsRegistration.getEmail(), EConfirmRegistrationTokenState.FALTA_CONFIRMAR);
 
+        //Verificamos si el token expiró
         if (LocalDateTime.now().isAfter(confirmRegistrationTokenResponse.getExpiredDate())) {
             throw new ConfirmRegistrationTokenNotFoundException("El token " + newUserConfirmsRegistration.getToken() + " vinculado a este email: " + newUserConfirmsRegistration.getEmail() + " expiró, para obtener un nuevo codigo debe iniciar sesion");
         }
 
+        //cambiamos el estado del usuario a REGISTRADO
         this.userService.modifyUserToConfirmRegister(newUserConfirmsRegistration.getEmail());
 
+        //eliminamos la confirmacion y lo guardamos en otra tabla para saber que existio
         this.confirmRegistrationTokenService.deleteUsedRegistrationConfirmationToken(newUserConfirmsRegistration.getToken(), newUserConfirmsRegistration.getEmail(), EConfirmRegistrationTokenState.CONFIRMADO);
+
+        LoginUserRequest loginUserRequest = new LoginUserRequest(newUserConfirmsRegistration.getEmail(), newUserConfirmsRegistration.getPassword());//logueamos al usuario y devolvemos un JWT
+
+        return this.loginUser(loginUserRequest);
 
     }
 

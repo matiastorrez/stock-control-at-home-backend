@@ -39,7 +39,7 @@ public abstract class ConfirmRegistrationTokenMapper {
             @Mapping(source = "confirmRegistrationToken.expiredDate", target = "expiredDate"),
             @Mapping(source = "confirmRegistrationToken.state", target = "state"),
             @Mapping(source = "confirmRegistrationToken.email", target = "email"),
-            @Mapping(target = "confirmationDate", ignore = true),
+            @Mapping(target = "sentencedDate", ignore = true),
 
     })
     public abstract AuditoryConfirmRegistrationTokenRequest confirmRegistrationTokenEntityToAuditoryConfirmRegistrationTokenRequest(ConfirmRegistrationToken confirmRegistrationToken);
