@@ -1,5 +1,6 @@
 package com.stockcontrolathome.authentication.entity;
 
+import com.stockcontrolathome.authentication.enums.EAuditoryConfirmRegistrationTokenState;
 import com.stockcontrolathome.authentication.enums.EConfirmRegistrationTokenState;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -38,7 +39,7 @@ public class AuditoryConfirmRegistrationToken {
 
     @Enumerated(value = EnumType.STRING)
     @Column(name = "state", nullable = false)
-    private EConfirmRegistrationTokenState state;
+    private EAuditoryConfirmRegistrationTokenState state;
 
     @Column(name = "email", nullable = false)
     private String email;

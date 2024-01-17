@@ -3,6 +3,7 @@ package com.stockcontrolathome.authentication.controller;
 import com.stockcontrolathome.authentication.dto.confirmregistrationtoken.request.NewUserConfirmsRegistration;
 import com.stockcontrolathome.authentication.dto.user.request.LoginUserRequest;
 import com.stockcontrolathome.authentication.dto.user.request.RegisterUserRequest;
+import com.stockcontrolathome.authentication.dto.user.request.ResendTokenForUserRequest;
 import com.stockcontrolathome.authentication.jwt.dto.JwtResponse;
 import com.stockcontrolathome.authentication.service.AuthService;
 import jakarta.validation.Valid;
@@ -21,12 +22,13 @@ public class AuthController {
     public static final String REGISTER_PATH = "/register";
     public static final String CONFIRM_REGISTER_PATH = "/confirm-register";
     public static final String LOGIN_USER_PATH = "/login";
+    public static final String RESEND_TOKEN_PATH = "/resend-token";
 
     @Autowired
     private AuthService authService;
 
     @PostMapping(value = AuthController.REGISTER_PATH, consumes = { MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<Void> registerUser(@RequestBody @Valid  RegisterUserRequest registerUserRequest) {
+    public ResponseEntity<Void> registerUser(@RequestBody @Valid RegisterUserRequest registerUserRequest) {
         authService.registerUser(registerUserRequest);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
@@ -40,6 +42,12 @@ public class AuthController {
     @PostMapping(value = AuthController.LOGIN_USER_PATH, consumes = { MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<JwtResponse> loginUser(@RequestBody @Valid LoginUserRequest loginUser) {
         return new ResponseEntity<>(this.authService.loginUser(loginUser), HttpStatus.OK);
+    }
+
+    @PostMapping(value = AuthController.RESEND_TOKEN_PATH, consumes = { MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<Void> resendToken(@RequestBody @Valid ResendTokenForUserRequest resendTokenForUserRequest) {
+        authService.resendRegistrationConfirmation(resendTokenForUserRequest);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
 

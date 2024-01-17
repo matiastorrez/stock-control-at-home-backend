@@ -40,6 +40,13 @@ public class GlobalExceptionHandler {
 		return new ResponseEntity<>(dataError, status);
 	}
 
+
+	@ExceptionHandler(ResendConfirmRegistrationTokenException.class)
+	public ResponseEntity<HashMap<String, DetailsError>> resendConfirmRegistrationTokenExceptionHandler(ResendConfirmRegistrationTokenException exception, WebRequest webRequest) {
+		logger.info("estoy en ResendConfirmRegistrationTokenException");
+		return buildErrorResponse(exception, webRequest, HttpStatus.NOT_FOUND, exception.getMessage());
+	}
+
 	@ExceptionHandler(NonUserWithThisEmailException.class)
 	public ResponseEntity<HashMap<String, DetailsError>> nonUserWithThisEmailExceptionHandler(NonUserWithThisEmailException exception, WebRequest webRequest) {
 		logger.info("estoy en NonUserWithThisEmailException");

@@ -9,4 +9,6 @@ public abstract class UserLoginState {
 
     public abstract UserState getState();
 
+    public abstract void resendToken(User user);
+
 }

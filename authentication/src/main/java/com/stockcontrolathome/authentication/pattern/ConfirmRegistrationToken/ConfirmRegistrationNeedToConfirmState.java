@@ -12,8 +12,8 @@ public class ConfirmRegistrationNeedToConfirmState extends ConfirmRegistrationTo
 
 
     @Override
-    public void confirm() {
-        throw new ConfirmRegistrationTokenExpiratedException("Este token ya fue utilizado, no puede utilizarlo");
+    public void checkState() {
+        log.info("Este token no fue utilizado todavía");
     }
 
     @Override

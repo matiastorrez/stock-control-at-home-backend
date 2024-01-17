@@ -2,7 +2,7 @@ package com.stockcontrolathome.authentication.service.impl;
 
 import com.stockcontrolathome.authentication.dto.auditoryconfirmregistrationtoken.request.AuditoryConfirmRegistrationTokenRequest;
 import com.stockcontrolathome.authentication.entity.AuditoryConfirmRegistrationToken;
-import com.stockcontrolathome.authentication.enums.EConfirmRegistrationTokenState;
+import com.stockcontrolathome.authentication.enums.EAuditoryConfirmRegistrationTokenState;
 import com.stockcontrolathome.authentication.mapper.AuditoryConfirmRegistrationTokenMapper;
 import com.stockcontrolathome.authentication.repository.AuditoryConfirmRegistrationToken.custom.AuditoryConfirmRegistrationTokenRepositoryCustom;
 import com.stockcontrolathome.authentication.service.AuditoryConfirmRegistrationTokenService;
@@ -20,7 +20,7 @@ public class AuditoryConfirmRegistrationTokenServiceImpl implements AuditoryConf
     private final AuditoryConfirmRegistrationTokenMapper auditoryConfirmRegistrationTokenMapper;
 
     @Override
-    public void saveAuditoryConfirmRegistrationToken(AuditoryConfirmRegistrationTokenRequest auditoryConfirmRegistrationTokenRequest, EConfirmRegistrationTokenState newState) {
+    public void saveAuditoryConfirmRegistrationToken(AuditoryConfirmRegistrationTokenRequest auditoryConfirmRegistrationTokenRequest, EAuditoryConfirmRegistrationTokenState newState) {
         AuditoryConfirmRegistrationToken auditoryConfirmRegistrationToken = this.auditoryConfirmRegistrationTokenMapper.auditoryConfirmRegistrationTokenRequestToAuditoryConfirmRegistrationTokenEntity(auditoryConfirmRegistrationTokenRequest);
         auditoryConfirmRegistrationToken.setSentencedDate(LocalDateTime.now());
         auditoryConfirmRegistrationToken.setState(newState);

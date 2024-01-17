@@ -4,7 +4,7 @@ import com.stockcontrolathome.authentication.enums.EConfirmRegistrationTokenStat
 
 public abstract class ConfirmRegistrationTokenState {
 
-    public abstract void confirm();
+    public abstract void checkState();
 
     public abstract EConfirmRegistrationTokenState getState();
 
