@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 import java.security.SecureRandom;
 
 @Component
-public class AlphanumericCodeGenerator implements  CodeGenerator{
+public class AlphanumericCodeGenerator implements CodeGenerator {
 
 
     @Override

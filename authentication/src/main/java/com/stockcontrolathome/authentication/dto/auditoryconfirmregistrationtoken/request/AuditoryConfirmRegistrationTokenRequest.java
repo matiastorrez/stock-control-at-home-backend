@@ -1,5 +1,6 @@
 package com.stockcontrolathome.authentication.dto.auditoryconfirmregistrationtoken.request;
 
+import com.stockcontrolathome.authentication.enums.EAuditoryConfirmRegistrationTokenState;
 import com.stockcontrolathome.authentication.enums.EConfirmRegistrationTokenState;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,7 +21,7 @@ public class AuditoryConfirmRegistrationTokenRequest {
 
     private LocalDateTime sentencedDate;
 
-    private EConfirmRegistrationTokenState state;
+    private EAuditoryConfirmRegistrationTokenState state;
 
     private String email;
 

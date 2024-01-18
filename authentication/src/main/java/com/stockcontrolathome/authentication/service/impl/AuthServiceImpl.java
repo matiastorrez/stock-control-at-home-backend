@@ -1,15 +1,20 @@
 package com.stockcontrolathome.authentication.service.impl;
 
+import com.stockcontrolathome.authentication.config.authentication.resendconfirmregister.authentication.ResendConfirmRegisterAuthenticationToken;
 import com.stockcontrolathome.authentication.dto.confirmregistrationtoken.request.NewUserConfirmsRegistration;
 import com.stockcontrolathome.authentication.dto.confirmregistrationtoken.response.ConfirmRegistrationTokenResponse;
 import com.stockcontrolathome.authentication.dto.user.request.LoginUserRequest;
 import com.stockcontrolathome.authentication.dto.user.request.RegisterUserRequest;
+import com.stockcontrolathome.authentication.dto.user.request.ResendTokenForUserRequest;
+import com.stockcontrolathome.authentication.enums.EAuditoryConfirmRegistrationTokenState;
 import com.stockcontrolathome.authentication.enums.EConfirmRegistrationTokenState;
 import com.stockcontrolathome.authentication.exception.ConfirmRegistrationTokenNotFoundException;
 import com.stockcontrolathome.authentication.jwt.dto.JwtResponse;
 import com.stockcontrolathome.authentication.jwt.service.JwtService;
 import com.stockcontrolathome.authentication.mapper.ConfirmRegistrationTokenMapper;
-import com.stockcontrolathome.authentication.service.*;
+import com.stockcontrolathome.authentication.service.AuthService;
+import com.stockcontrolathome.authentication.service.ConfirmRegistrationTokenService;
+import com.stockcontrolathome.authentication.service.UserService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -31,6 +36,7 @@ public class AuthServiceImpl implements AuthService {
     private final UserService userService;
     private final ConfirmRegistrationTokenService confirmRegistrationTokenService;
     private final AuthenticationManager authenticationManager;
+
     private final JwtService jwtService;
 
     public static final String BAD_CREDENTIALS = "Algunas de sus credenciales son incorrectas";
@@ -61,7 +67,7 @@ public class AuthServiceImpl implements AuthService {
         this.userService.modifyUserToConfirmRegister(newUserConfirmsRegistration.getEmail());
 
         //eliminamos la confirmacion y lo guardamos en otra tabla para saber que existio
-        this.confirmRegistrationTokenService.deleteUsedRegistrationConfirmationToken(newUserConfirmsRegistration.getToken(), newUserConfirmsRegistration.getEmail(), EConfirmRegistrationTokenState.CONFIRMADO);
+        this.confirmRegistrationTokenService.deleteUsedRegistrationConfirmationToken(newUserConfirmsRegistration.getToken(), newUserConfirmsRegistration.getEmail(), EAuditoryConfirmRegistrationTokenState.CONFIRMADO);
 
         LoginUserRequest loginUserRequest = new LoginUserRequest(newUserConfirmsRegistration.getEmail(), newUserConfirmsRegistration.getPassword());//logueamos al usuario y devolvemos un JWT
 
@@ -84,6 +90,12 @@ public class AuthServiceImpl implements AuthService {
             throw new RuntimeException(BAD_CREDENTIALS);
         }
 
+    }
+
+    @Override
+    public void resendRegistrationConfirmation(ResendTokenForUserRequest resendTokenForUserRequest) {
+        this.authenticationManager
+                .authenticate(new ResendConfirmRegisterAuthenticationToken(resendTokenForUserRequest.getEmail(), resendTokenForUserRequest.getPassword()));
     }
 
 

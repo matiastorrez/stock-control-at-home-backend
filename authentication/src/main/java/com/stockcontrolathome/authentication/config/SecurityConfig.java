@@ -1,5 +1,7 @@
 package com.stockcontrolathome.authentication.config;
 
+import com.stockcontrolathome.authentication.config.authentication.resendconfirmregister.provider.ResendConfirmRegisterTokenProvider;
+import com.stockcontrolathome.authentication.config.authentication.resendconfirmregister.service.ResendConfirmRegisterTokenService;
 import com.stockcontrolathome.authentication.jwt.filter.JwtTokenFilter;
 import com.stockcontrolathome.authentication.service.impl.UserDetailServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,8 +9,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -24,10 +26,16 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig {
     @Autowired
     private UserDetailServiceImpl userDetailServiceImpl;
+
+    @Autowired
+    private ResendConfirmRegisterTokenService resendConfirmRegisterTokenService;
+
+
     @Bean
     public JwtTokenFilter jwtTokenFilter() {
         return new JwtTokenFilter();
     }
+
     @Bean
     PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -74,12 +82,10 @@ public class SecurityConfig {
 
 
 
+
     @Bean
     public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
-        return http
-                .getSharedObject(AuthenticationManagerBuilder.class)
-                .authenticationProvider(daoAuthenticationProvider())
-                .build();
+        return new ProviderManager(daoAuthenticationProvider(), resendConfirmRegisterTokenProvider());
     }
 
     @Bean
@@ -90,7 +96,10 @@ public class SecurityConfig {
         return dap;
     }
 
-
+    @Bean
+    public ResendConfirmRegisterTokenProvider resendConfirmRegisterTokenProvider(){
+        return new ResendConfirmRegisterTokenProvider(resendConfirmRegisterTokenService, passwordEncoder());
+    }
 
 
 }

@@ -2,6 +2,7 @@ package com.stockcontrolathome.authentication.service.impl;
 
 import com.stockcontrolathome.authentication.dto.confirmregistrationtoken.response.ConfirmRegistrationTokenResponse;
 import com.stockcontrolathome.authentication.entity.ConfirmRegistrationToken;
+import com.stockcontrolathome.authentication.enums.EAuditoryConfirmRegistrationTokenState;
 import com.stockcontrolathome.authentication.enums.EConfirmRegistrationTokenState;
 import com.stockcontrolathome.authentication.exception.ConfirmRegistrationTokenNotFoundException;
 import com.stockcontrolathome.authentication.mapper.ConfirmRegistrationTokenMapper;
@@ -70,21 +71,19 @@ public class ConfirmRegistrationTokenServiceImpl implements ConfirmRegistrationT
 
     @Override
     @Transactional
-    public ConfirmRegistrationTokenResponse renewConfirmRegistrationToken(String email, String oldToken, EConfirmRegistrationTokenState oldTokenNewState) {
-        this.deleteUsedRegistrationConfirmationToken(oldToken, email, oldTokenNewState);
-        ConfirmRegistrationTokenResponse confirmRegistrationTokenResponse = this.createConfirmRegistrationToken(email);
-        this.notificationService.send("Registro", confirmRegistrationTokenResponse.getEmail(), this.notificationService.buildRegistrationMessage(confirmRegistrationTokenResponse.getToken(), confirmRegistrationTokenResponse.getEmail()));
-        return confirmRegistrationTokenResponse;
+    public ConfirmRegistrationTokenResponse renewConfirmRegistrationToken(String email, String oldToken, EAuditoryConfirmRegistrationTokenState newStateForUsedToken) {
+        this.deleteUsedRegistrationConfirmationToken(oldToken, email, newStateForUsedToken);
+        return this.createConfirmRegistrationToken(email);
     }
 
     @Override
     @Transactional
-    public void deleteUsedRegistrationConfirmationToken(String token, String email, EConfirmRegistrationTokenState newState) {
+    public void deleteUsedRegistrationConfirmationToken(String token, String email, EAuditoryConfirmRegistrationTokenState newStateForUsedToken) {
 
         ConfirmRegistrationToken confirmRegistrationToken = this.confirmRegistrationTokenRepositoryCustom.getConfirmRegistrationTokenByEmail(email)
                 .orElseThrow(() -> new ConfirmRegistrationTokenNotFoundException("No se encontró un código para el usuario con email: " + email));
 
-        this.auditoryConfirmRegistrationTokenService.saveAuditoryConfirmRegistrationToken(this.confirmRegistrationTokenMapper.confirmRegistrationTokenEntityToAuditoryConfirmRegistrationTokenRequest(confirmRegistrationToken), newState);
+        this.auditoryConfirmRegistrationTokenService.saveAuditoryConfirmRegistrationToken(this.confirmRegistrationTokenMapper.confirmRegistrationTokenEntityToAuditoryConfirmRegistrationTokenRequest(confirmRegistrationToken), newStateForUsedToken);
 
         this.confirmRegistrationTokenRepositoryCustom.deleteByTokenAndEmailAndState(token, email, EConfirmRegistrationTokenState.FALTA_CONFIRMAR);
 
