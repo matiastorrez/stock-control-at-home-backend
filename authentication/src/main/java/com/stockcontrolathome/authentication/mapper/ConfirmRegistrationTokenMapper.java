@@ -1,6 +1,6 @@
 package com.stockcontrolathome.authentication.mapper;
 
-import com.stockcontrolathome.authentication.auditory.confirmregistrationtoken.dto.auditoryconfirmregistrationtoken.request.AuditoryConfirmRegistrationTokenRequest;
+import com.stockcontrolathome.authentication.audit.confirmregistrationtoken.dto.request.AuditConfirmRegistrationTokenRequest;
 import com.stockcontrolathome.authentication.dto.confirmregistrationtoken.request.ConfirmRegistrationTokenRequest;
 import com.stockcontrolathome.authentication.dto.confirmregistrationtoken.response.ConfirmRegistrationTokenResponse;
 import com.stockcontrolathome.authentication.entity.ConfirmRegistrationToken;
@@ -33,16 +33,14 @@ public abstract class ConfirmRegistrationTokenMapper {
 
 
     @Mappings({
-            @Mapping(source = "confirmRegistrationToken.idConfirmRegistrationToken", target = "idConfirmRegistrationToken"),
             @Mapping(source = "confirmRegistrationToken.token", target = "token"),
             @Mapping(source = "confirmRegistrationToken.createdDate", target = "createdDate"),
             @Mapping(source = "confirmRegistrationToken.expiredDate", target = "expiredDate"),
             @Mapping(source = "confirmRegistrationToken.email", target = "email"),
-            @Mapping(target = "sentencedDate", ignore = true),
             @Mapping(target = "state", ignore = true),
 
     })
-    public abstract AuditoryConfirmRegistrationTokenRequest confirmRegistrationTokenEntityToAuditoryConfirmRegistrationTokenRequest(ConfirmRegistrationToken confirmRegistrationToken);
+    public abstract AuditConfirmRegistrationTokenRequest confirmRegistrationTokenEntityToAuditConfirmRegistrationTokenRequest(ConfirmRegistrationToken confirmRegistrationToken);
 
 
     //to delete

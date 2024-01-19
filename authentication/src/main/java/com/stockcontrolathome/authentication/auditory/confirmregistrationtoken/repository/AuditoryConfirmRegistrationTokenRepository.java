@@ -1,7 +1,0 @@
-package com.stockcontrolathome.authentication.auditory.confirmregistrationtoken.repository;
-
-import com.stockcontrolathome.authentication.auditory.confirmregistrationtoken.entity.AuditoryConfirmRegistrationToken;
-import org.springframework.data.jpa.repository.JpaRepository;
-
-public interface AuditoryConfirmRegistrationTokenRepository extends JpaRepository<AuditoryConfirmRegistrationToken, Long> {
-}

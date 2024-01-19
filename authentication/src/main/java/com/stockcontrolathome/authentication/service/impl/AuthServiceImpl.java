@@ -1,12 +1,12 @@
 package com.stockcontrolathome.authentication.service.impl;
 
+import com.stockcontrolathome.authentication.audit.confirmregistrationtoken.enums.EAuditConfirmRegistrationToken;
 import com.stockcontrolathome.authentication.config.authentication.resendconfirmregister.authentication.ResendConfirmRegisterAuthenticationToken;
 import com.stockcontrolathome.authentication.dto.confirmregistrationtoken.request.NewUserConfirmsRegistration;
 import com.stockcontrolathome.authentication.dto.confirmregistrationtoken.response.ConfirmRegistrationTokenResponse;
 import com.stockcontrolathome.authentication.dto.user.request.LoginUserRequest;
 import com.stockcontrolathome.authentication.dto.user.request.RegisterUserRequest;
 import com.stockcontrolathome.authentication.dto.user.request.ResendTokenForUserRequest;
-import com.stockcontrolathome.authentication.auditory.confirmregistrationtoken.enums.EAuditoryConfirmRegistrationTokenState;
 import com.stockcontrolathome.authentication.enums.EConfirmRegistrationTokenState;
 import com.stockcontrolathome.authentication.exception.ConfirmRegistrationTokenNotFoundException;
 import com.stockcontrolathome.authentication.jwt.dto.JwtResponse;
@@ -67,7 +67,7 @@ public class AuthServiceImpl implements AuthService {
         this.userService.modifyUserToConfirmRegister(newUserConfirmsRegistration.getEmail());
 
         //eliminamos la confirmacion y lo guardamos en otra tabla para saber que existio
-        this.confirmRegistrationTokenService.deleteUsedRegistrationConfirmationToken(newUserConfirmsRegistration.getToken(), newUserConfirmsRegistration.getEmail(), EAuditoryConfirmRegistrationTokenState.CONFIRMADO);
+        this.confirmRegistrationTokenService.deleteUsedRegistrationConfirmationToken(newUserConfirmsRegistration.getToken(), newUserConfirmsRegistration.getEmail(), EAuditConfirmRegistrationToken.CONFIRMADO);
 
         LoginUserRequest loginUserRequest = new LoginUserRequest(newUserConfirmsRegistration.getEmail(), newUserConfirmsRegistration.getPassword());//logueamos al usuario y devolvemos un JWT
 
