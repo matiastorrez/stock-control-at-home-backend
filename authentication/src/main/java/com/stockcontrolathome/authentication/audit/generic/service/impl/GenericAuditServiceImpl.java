@@ -20,7 +20,7 @@ public class GenericAuditServiceImpl
         STATE extends GenericAuditEnum<STATE_TYPE>,
         STATE_TYPE
         >
-        implements GenericAuditService<DTO, STATE_TYPE>
+        implements GenericAuditService<DTO>
 {
 
     @Autowired
@@ -31,12 +31,10 @@ public class GenericAuditServiceImpl
 
 
     @Override
-    public void saveGenericAudit(DTO genericAuditDTO, GenericAuditEnum<STATE_TYPE> genericAuditEnum) {
+    public void saveGenericAudit(DTO genericAuditDTO) {
 
         ENTITY entity = this.genericMapper.toEntity(genericAuditDTO);
         entity.setSentencedDate(LocalDateTime.now());
-        entity.setState(genericAuditEnum.getValue());
-
         this.genericAuditCustomRepository.saveGenericAudit(entity);
 
     }

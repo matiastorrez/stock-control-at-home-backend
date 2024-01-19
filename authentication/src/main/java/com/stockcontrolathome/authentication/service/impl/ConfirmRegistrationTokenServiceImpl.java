@@ -81,9 +81,9 @@ public class ConfirmRegistrationTokenServiceImpl implements ConfirmRegistrationT
         ConfirmRegistrationToken confirmRegistrationToken = this.confirmRegistrationTokenRepositoryCustom.getConfirmRegistrationTokenByEmail(email)
                 .orElseThrow(() -> new ConfirmRegistrationTokenNotFoundException("No se encontró un código para el usuario con email: " + email));
 
-        AuditConfirmRegistrationTokenRequest request = new AuditConfirmRegistrationTokenRequest(newStateForUsedToken, confirmRegistrationToken.getIdConfirmRegistrationToken(), confirmRegistrationToken.getToken(), confirmRegistrationToken.getCreatedDate(), confirmRegistrationToken.getExpiredDate(), confirmRegistrationToken.getEmail());
+        AuditConfirmRegistrationTokenRequest request = this.confirmRegistrationTokenMapper.confirmRegistrationTokenEntityToAuditConfirmRegistrationTokenRequest(confirmRegistrationToken,newStateForUsedToken);
 
-        this.auditConfirmRegistrationToken.saveGenericAudit(request, newStateForUsedToken);
+        this.auditConfirmRegistrationToken.saveGenericAudit(request);
 
         this.confirmRegistrationTokenRepositoryCustom.deleteByTokenAndEmailAndState(token, email, EConfirmRegistrationTokenState.FALTA_CONFIRMAR);
 
