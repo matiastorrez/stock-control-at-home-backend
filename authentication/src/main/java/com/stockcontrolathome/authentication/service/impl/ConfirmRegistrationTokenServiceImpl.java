@@ -1,13 +1,15 @@
 package com.stockcontrolathome.authentication.service.impl;
 
+import com.stockcontrolathome.authentication.audit.confirmregistrationtoken.dto.request.AuditConfirmRegistrationTokenRequest;
+import com.stockcontrolathome.authentication.audit.confirmregistrationtoken.entity.AuditConfirmRegistrationToken;
+import com.stockcontrolathome.authentication.audit.confirmregistrationtoken.enums.EAuditConfirmRegistrationToken;
+import com.stockcontrolathome.authentication.audit.generic.service.impl.GenericAuditServiceImpl;
 import com.stockcontrolathome.authentication.dto.confirmregistrationtoken.response.ConfirmRegistrationTokenResponse;
 import com.stockcontrolathome.authentication.entity.ConfirmRegistrationToken;
-import com.stockcontrolathome.authentication.enums.EAuditoryConfirmRegistrationTokenState;
 import com.stockcontrolathome.authentication.enums.EConfirmRegistrationTokenState;
 import com.stockcontrolathome.authentication.exception.ConfirmRegistrationTokenNotFoundException;
 import com.stockcontrolathome.authentication.mapper.ConfirmRegistrationTokenMapper;
 import com.stockcontrolathome.authentication.repository.ConfirmRegistrationToken.custom.ConfirmRegistrationTokenRepositoryCustom;
-import com.stockcontrolathome.authentication.service.AuditoryConfirmRegistrationTokenService;
 import com.stockcontrolathome.authentication.service.ConfirmRegistrationTokenService;
 import com.stockcontrolathome.authentication.service.NotificationService;
 import com.stockcontrolathome.authentication.utils.codegenerator.CodeGenerator;
@@ -20,15 +22,11 @@ import java.time.LocalDateTime;
 @Service
 @AllArgsConstructor
 public class ConfirmRegistrationTokenServiceImpl implements ConfirmRegistrationTokenService {
-
     private final ConfirmRegistrationTokenRepositoryCustom confirmRegistrationTokenRepositoryCustom;
-
-    private final AuditoryConfirmRegistrationTokenService auditoryConfirmRegistrationTokenService;
     private final ConfirmRegistrationTokenMapper confirmRegistrationTokenMapper;
     private final NotificationService notificationService;
-
-
     private final CodeGenerator codeGenerator;
+    private final GenericAuditServiceImpl<AuditConfirmRegistrationTokenRequest, AuditConfirmRegistrationToken, EAuditConfirmRegistrationToken, String> auditConfirmRegistrationToken;
 
 
     @Override
@@ -71,19 +69,21 @@ public class ConfirmRegistrationTokenServiceImpl implements ConfirmRegistrationT
 
     @Override
     @Transactional
-    public ConfirmRegistrationTokenResponse renewConfirmRegistrationToken(String email, String oldToken, EAuditoryConfirmRegistrationTokenState newStateForUsedToken) {
+    public ConfirmRegistrationTokenResponse renewConfirmRegistrationToken(String email, String oldToken, EAuditConfirmRegistrationToken newStateForUsedToken) {
         this.deleteUsedRegistrationConfirmationToken(oldToken, email, newStateForUsedToken);
         return this.createConfirmRegistrationToken(email);
     }
 
     @Override
     @Transactional
-    public void deleteUsedRegistrationConfirmationToken(String token, String email, EAuditoryConfirmRegistrationTokenState newStateForUsedToken) {
+    public void deleteUsedRegistrationConfirmationToken(String token, String email, EAuditConfirmRegistrationToken newStateForUsedToken) {
 
         ConfirmRegistrationToken confirmRegistrationToken = this.confirmRegistrationTokenRepositoryCustom.getConfirmRegistrationTokenByEmail(email)
                 .orElseThrow(() -> new ConfirmRegistrationTokenNotFoundException("No se encontró un código para el usuario con email: " + email));
 
-        this.auditoryConfirmRegistrationTokenService.saveAuditoryConfirmRegistrationToken(this.confirmRegistrationTokenMapper.confirmRegistrationTokenEntityToAuditoryConfirmRegistrationTokenRequest(confirmRegistrationToken), newStateForUsedToken);
+        AuditConfirmRegistrationTokenRequest request = this.confirmRegistrationTokenMapper.confirmRegistrationTokenEntityToAuditConfirmRegistrationTokenRequest(confirmRegistrationToken,newStateForUsedToken);
+
+        this.auditConfirmRegistrationToken.saveGenericAudit(request);
 
         this.confirmRegistrationTokenRepositoryCustom.deleteByTokenAndEmailAndState(token, email, EConfirmRegistrationTokenState.FALTA_CONFIRMAR);
 
