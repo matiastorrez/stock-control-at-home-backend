@@ -1,4 +1,4 @@
-package com.stockcontrolathome.authentication.enums;
+package com.stockcontrolathome.authentication.auditory.confirmregistrationtoken.enums;
 
 public enum EAuditoryConfirmRegistrationTokenState {
 

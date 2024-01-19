@@ -1,12 +1,10 @@
-package com.stockcontrolathome.authentication.entity;
+package com.stockcontrolathome.authentication.auditory.confirmregistrationtoken.entity;
 
-import com.stockcontrolathome.authentication.enums.EAuditoryConfirmRegistrationTokenState;
-import com.stockcontrolathome.authentication.enums.EConfirmRegistrationTokenState;
+import com.stockcontrolathome.authentication.auditory.confirmregistrationtoken.enums.EAuditoryConfirmRegistrationTokenState;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 

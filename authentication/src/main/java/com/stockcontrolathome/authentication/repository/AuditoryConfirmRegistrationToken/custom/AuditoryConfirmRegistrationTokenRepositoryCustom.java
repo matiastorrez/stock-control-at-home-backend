@@ -1,8 +1,0 @@
-package com.stockcontrolathome.authentication.repository.AuditoryConfirmRegistrationToken.custom;
-
-import com.stockcontrolathome.authentication.entity.AuditoryConfirmRegistrationToken;
-
-public interface AuditoryConfirmRegistrationTokenRepositoryCustom {
-
-    void saveAuditoryConfirmRegistrationToken(AuditoryConfirmRegistrationToken auditoryConfirmRegistrationToken);
-}

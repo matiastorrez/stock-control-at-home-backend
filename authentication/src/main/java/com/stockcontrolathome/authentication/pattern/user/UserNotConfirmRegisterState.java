@@ -2,7 +2,7 @@ package com.stockcontrolathome.authentication.pattern.user;
 
 import com.stockcontrolathome.authentication.dto.confirmregistrationtoken.response.ConfirmRegistrationTokenResponse;
 import com.stockcontrolathome.authentication.entity.User;
-import com.stockcontrolathome.authentication.enums.EAuditoryConfirmRegistrationTokenState;
+import com.stockcontrolathome.authentication.auditory.confirmregistrationtoken.enums.EAuditoryConfirmRegistrationTokenState;
 import com.stockcontrolathome.authentication.enums.EConfirmRegistrationTokenState;
 import com.stockcontrolathome.authentication.enums.UserState;
 import com.stockcontrolathome.authentication.exception.NeedToConfirmBeforeLoginException;

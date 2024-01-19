@@ -1,7 +1,6 @@
-package com.stockcontrolathome.authentication.dto.auditoryconfirmregistrationtoken.request;
+package com.stockcontrolathome.authentication.auditory.confirmregistrationtoken.dto.auditoryconfirmregistrationtoken.request;
 
-import com.stockcontrolathome.authentication.enums.EAuditoryConfirmRegistrationTokenState;
-import com.stockcontrolathome.authentication.enums.EConfirmRegistrationTokenState;
+import com.stockcontrolathome.authentication.auditory.confirmregistrationtoken.enums.EAuditoryConfirmRegistrationTokenState;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

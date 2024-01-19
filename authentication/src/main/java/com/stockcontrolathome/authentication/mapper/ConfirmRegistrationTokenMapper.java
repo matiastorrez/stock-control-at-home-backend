@@ -1,6 +1,6 @@
 package com.stockcontrolathome.authentication.mapper;
 
-import com.stockcontrolathome.authentication.dto.auditoryconfirmregistrationtoken.request.AuditoryConfirmRegistrationTokenRequest;
+import com.stockcontrolathome.authentication.auditory.confirmregistrationtoken.dto.auditoryconfirmregistrationtoken.request.AuditoryConfirmRegistrationTokenRequest;
 import com.stockcontrolathome.authentication.dto.confirmregistrationtoken.request.ConfirmRegistrationTokenRequest;
 import com.stockcontrolathome.authentication.dto.confirmregistrationtoken.response.ConfirmRegistrationTokenResponse;
 import com.stockcontrolathome.authentication.entity.ConfirmRegistrationToken;
@@ -43,6 +43,10 @@ public abstract class ConfirmRegistrationTokenMapper {
 
     })
     public abstract AuditoryConfirmRegistrationTokenRequest confirmRegistrationTokenEntityToAuditoryConfirmRegistrationTokenRequest(ConfirmRegistrationToken confirmRegistrationToken);
+
+
+    //to delete
+
 
 
 

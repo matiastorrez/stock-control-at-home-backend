@@ -6,7 +6,7 @@ import com.stockcontrolathome.authentication.dto.confirmregistrationtoken.respon
 import com.stockcontrolathome.authentication.dto.user.request.LoginUserRequest;
 import com.stockcontrolathome.authentication.dto.user.request.RegisterUserRequest;
 import com.stockcontrolathome.authentication.dto.user.request.ResendTokenForUserRequest;
-import com.stockcontrolathome.authentication.enums.EAuditoryConfirmRegistrationTokenState;
+import com.stockcontrolathome.authentication.auditory.confirmregistrationtoken.enums.EAuditoryConfirmRegistrationTokenState;
 import com.stockcontrolathome.authentication.enums.EConfirmRegistrationTokenState;
 import com.stockcontrolathome.authentication.exception.ConfirmRegistrationTokenNotFoundException;
 import com.stockcontrolathome.authentication.jwt.dto.JwtResponse;

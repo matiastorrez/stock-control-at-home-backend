@@ -1,9 +1,7 @@
-package com.stockcontrolathome.authentication.mapper;
+package com.stockcontrolathome.authentication.auditory.confirmregistrationtoken.mapper;
 
-import com.stockcontrolathome.authentication.dto.auditoryconfirmregistrationtoken.request.AuditoryConfirmRegistrationTokenRequest;
-import com.stockcontrolathome.authentication.dto.confirmregistrationtoken.request.ConfirmRegistrationTokenRequest;
-import com.stockcontrolathome.authentication.entity.AuditoryConfirmRegistrationToken;
-import com.stockcontrolathome.authentication.entity.ConfirmRegistrationToken;
+import com.stockcontrolathome.authentication.auditory.confirmregistrationtoken.dto.auditoryconfirmregistrationtoken.request.AuditoryConfirmRegistrationTokenRequest;
+import com.stockcontrolathome.authentication.auditory.confirmregistrationtoken.entity.AuditoryConfirmRegistrationToken;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;

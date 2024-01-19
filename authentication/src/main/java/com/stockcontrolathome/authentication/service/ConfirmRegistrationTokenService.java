@@ -1,7 +1,7 @@
 package com.stockcontrolathome.authentication.service;
 
 import com.stockcontrolathome.authentication.dto.confirmregistrationtoken.response.ConfirmRegistrationTokenResponse;
-import com.stockcontrolathome.authentication.enums.EAuditoryConfirmRegistrationTokenState;
+import com.stockcontrolathome.authentication.auditory.confirmregistrationtoken.enums.EAuditoryConfirmRegistrationTokenState;
 import com.stockcontrolathome.authentication.enums.EConfirmRegistrationTokenState;
 
 public interface ConfirmRegistrationTokenService {
