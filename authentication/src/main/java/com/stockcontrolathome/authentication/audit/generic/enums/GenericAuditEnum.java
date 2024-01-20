@@ -1,15 +1,7 @@
 package com.stockcontrolathome.authentication.audit.generic.enums;
 
-public class GenericAuditEnum<T> {
+//esta interface solo sirve para agrupar los ENUMs utilizados para las auditorias
+public interface GenericAuditEnum {
 
 
-    protected final T value;
-
-    protected GenericAuditEnum(T value) {
-        this.value = value;
-    }
-
-    public T getValue() {
-        return value;
-    }
 }

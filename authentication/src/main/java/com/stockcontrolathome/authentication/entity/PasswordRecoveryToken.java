@@ -1,6 +1,7 @@
 package com.stockcontrolathome.authentication.entity;
 
 import com.stockcontrolathome.authentication.enums.EConfirmRegistrationTokenState;
+import com.stockcontrolathome.authentication.enums.EPasswordRecoveryTokenState;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -11,14 +12,13 @@ import java.time.LocalDateTime;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity(name = "ConfirmRegistrationToken")
-public class ConfirmRegistrationToken {
-
+@Entity(name = "PasswordRecoveryToken")
+public class PasswordRecoveryToken {
 
     @Id
-    @Column(name = "id_confirm_registration_token")
+    @Column(name = "id_password_recovery_token")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idConfirmRegistrationToken;
+    private Long idPasswordRecoveryToken;
 
     @Column(columnDefinition = "TEXT", nullable = false)
     private String token;
@@ -31,10 +31,9 @@ public class ConfirmRegistrationToken {
 
     @Enumerated(value = EnumType.STRING)
     @Column(name = "state", nullable = false)
-    private EConfirmRegistrationTokenState state;
+    private EPasswordRecoveryTokenState state;
 
     @Column(name = "email", nullable = false)
     private String email;
-
 
 }

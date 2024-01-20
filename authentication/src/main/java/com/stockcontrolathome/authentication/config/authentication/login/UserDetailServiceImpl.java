@@ -1,6 +1,5 @@
-package com.stockcontrolathome.authentication.service.impl;
+package com.stockcontrolathome.authentication.config.authentication.login;
 
-import com.stockcontrolathome.authentication.MainUser;
 import com.stockcontrolathome.authentication.entity.User;
 import com.stockcontrolathome.authentication.enums.UserState;
 import com.stockcontrolathome.authentication.exception.NonUserWithThisEmailException;

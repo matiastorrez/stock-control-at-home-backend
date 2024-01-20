@@ -2,7 +2,7 @@ package com.stockcontrolathome.authentication.jwt.filter;
 
 
 import com.stockcontrolathome.authentication.jwt.service.JwtService;
-import com.stockcontrolathome.authentication.service.impl.UserDetailServiceImpl;
+import com.stockcontrolathome.authentication.config.authentication.login.UserDetailServiceImpl;
 import io.jsonwebtoken.JwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

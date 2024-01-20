@@ -1,7 +1,9 @@
 package com.stockcontrolathome.authentication.service;
 
 import com.stockcontrolathome.authentication.dto.confirmregistrationtoken.request.NewUserConfirmsRegistration;
+import com.stockcontrolathome.authentication.dto.passwordrecoverytoken.request.ConfirmRecoverPasswordRequest;
 import com.stockcontrolathome.authentication.dto.user.request.LoginUserRequest;
+import com.stockcontrolathome.authentication.dto.user.request.RecoverPasswordRequest;
 import com.stockcontrolathome.authentication.dto.user.request.RegisterUserRequest;
 import com.stockcontrolathome.authentication.dto.user.request.ResendTokenForUserRequest;
 import com.stockcontrolathome.authentication.jwt.dto.JwtResponse;
@@ -15,6 +17,10 @@ public interface AuthService {
     JwtResponse loginUser(LoginUserRequest user);
 
     void resendRegistrationConfirmation(ResendTokenForUserRequest resendTokenForUserRequest);
+
+    void recoverPassword(RecoverPasswordRequest recoverPasswordRequest);
+
+    void confirmRecoverPassword(ConfirmRecoverPasswordRequest confirmRecoverPasswordRequest);
 
 
 

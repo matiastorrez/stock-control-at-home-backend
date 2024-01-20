@@ -44,8 +44,6 @@ public abstract class ConfirmRegistrationTokenMapper {
     public abstract AuditConfirmRegistrationTokenRequest confirmRegistrationTokenEntityToAuditConfirmRegistrationTokenRequest(ConfirmRegistrationToken confirmRegistrationToken, EAuditConfirmRegistrationToken eAuditConfirmRegistrationToken);
 
 
-    //to delete
-
 
 
 

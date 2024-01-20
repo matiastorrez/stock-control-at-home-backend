@@ -5,9 +5,8 @@ import com.stockcontrolathome.authentication.audit.generic.enums.GenericAuditEnu
 
 public interface GenericAuditCustomRepository
         <
-            ENTITY extends GenericAudit<STATE, STATE_TYPE>,
-            STATE extends GenericAuditEnum<STATE_TYPE>,
-            STATE_TYPE
+            ENTITY extends GenericAudit<STATE_TYPE>,
+            STATE_TYPE extends GenericAuditEnum
         >
 {
 

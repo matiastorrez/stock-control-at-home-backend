@@ -1,7 +1,9 @@
 package com.stockcontrolathome.authentication.controller;
 
 import com.stockcontrolathome.authentication.dto.confirmregistrationtoken.request.NewUserConfirmsRegistration;
+import com.stockcontrolathome.authentication.dto.passwordrecoverytoken.request.ConfirmRecoverPasswordRequest;
 import com.stockcontrolathome.authentication.dto.user.request.LoginUserRequest;
+import com.stockcontrolathome.authentication.dto.user.request.RecoverPasswordRequest;
 import com.stockcontrolathome.authentication.dto.user.request.RegisterUserRequest;
 import com.stockcontrolathome.authentication.dto.user.request.ResendTokenForUserRequest;
 import com.stockcontrolathome.authentication.jwt.dto.JwtResponse;
@@ -23,6 +25,8 @@ public class AuthController {
     public static final String CONFIRM_REGISTER_PATH = "/confirm-register";
     public static final String LOGIN_USER_PATH = "/login";
     public static final String RESEND_TOKEN_PATH = "/resend-token";
+    public static final String RECOVER_PASSWORD_PATH = "/recover-password";
+    public static final String CONFIRM_RECOVER_PASSWORD_PATH = "/confirm-recover-password";
 
     @Autowired
     private AuthService authService;
@@ -47,6 +51,18 @@ public class AuthController {
     @PostMapping(value = AuthController.RESEND_TOKEN_PATH, consumes = { MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<Void> resendToken(@RequestBody @Valid ResendTokenForUserRequest resendTokenForUserRequest) {
         authService.resendRegistrationConfirmation(resendTokenForUserRequest);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @PostMapping(value = AuthController.RECOVER_PASSWORD_PATH, consumes = { MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<Void> recoverPassword(@RequestBody @Valid RecoverPasswordRequest recoverPasswordRequest) {
+        authService.recoverPassword(recoverPasswordRequest);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @PostMapping(value = AuthController.CONFIRM_RECOVER_PASSWORD_PATH, consumes = { MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<Void> confirmRecoverPassword(@RequestBody @Valid ConfirmRecoverPasswordRequest confirmRecoverPasswordRequest) {
+        authService.confirmRecoverPassword(confirmRecoverPasswordRequest);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 

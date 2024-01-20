@@ -59,6 +59,13 @@ public class GlobalExceptionHandler {
 		return buildErrorResponse(exception, webRequest, HttpStatus.GONE, exception.getMessage());
 	}
 
+
+	@ExceptionHandler(PasswordRecoveryTokenNotFoundException.class)
+	public ResponseEntity<HashMap<String, DetailsError>> passwordRecoveryTokenNotFoundExceptionHandler(PasswordRecoveryTokenNotFoundException exception, WebRequest webRequest) {
+		logger.info("estoy en PasswordRecoveryTokenNotFoundException");
+		return buildErrorResponse(exception, webRequest, HttpStatus.NOT_FOUND, exception.getMessage());
+	}
+
 	@ExceptionHandler(ConfirmRegistrationTokenNotFoundException.class)
 	public ResponseEntity<HashMap<String, DetailsError>> confirmRegistrationTokenNotFoundExceptionHandler(ConfirmRegistrationTokenNotFoundException exception, WebRequest webRequest) {
 		logger.info("estoy en ConfirmRegistrationTokenNotFoundException");

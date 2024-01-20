@@ -1,8 +1,9 @@
-package com.stockcontrolathome.authentication.audit.confirmregistrationtoken.entity;
+package com.stockcontrolathome.authentication.audit.passwordrecoverytoken.entity;
 
 import com.stockcontrolathome.authentication.audit.generic.entity.GenericAudit;
-import com.stockcontrolathome.authentication.audit.confirmregistrationtoken.enums.EAuditConfirmRegistrationToken;
-import jakarta.persistence.*;
+import com.stockcontrolathome.authentication.audit.passwordrecoverytoken.enums.EAuditPasswordRecoveryToken;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,8 +13,8 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @NoArgsConstructor
-@Entity(name = "AuditConfirmRegistrationToken")
-public class AuditConfirmRegistrationToken extends GenericAudit<EAuditConfirmRegistrationToken> {
+@Entity(name = "AuditPasswordRecoveryToken")
+public class AuditPasswordRecoveryToken extends GenericAudit<EAuditPasswordRecoveryToken> {
 
     @Column(columnDefinition = "TEXT", nullable = false)
     private String token;
@@ -26,4 +27,5 @@ public class AuditConfirmRegistrationToken extends GenericAudit<EAuditConfirmReg
 
     @Column(name = "email", nullable = false)
     private String email;
+
 }
