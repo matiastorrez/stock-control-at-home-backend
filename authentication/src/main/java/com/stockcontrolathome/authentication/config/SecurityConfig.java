@@ -1,9 +1,9 @@
 package com.stockcontrolathome.authentication.config;
 
+import com.stockcontrolathome.authentication.config.authentication.login.UserDetailServiceImpl;
 import com.stockcontrolathome.authentication.config.authentication.resendconfirmregister.provider.ResendConfirmRegisterTokenProvider;
 import com.stockcontrolathome.authentication.config.authentication.resendconfirmregister.service.ResendConfirmRegisterTokenService;
 import com.stockcontrolathome.authentication.jwt.filter.JwtTokenFilter;
-import com.stockcontrolathome.authentication.service.impl.UserDetailServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

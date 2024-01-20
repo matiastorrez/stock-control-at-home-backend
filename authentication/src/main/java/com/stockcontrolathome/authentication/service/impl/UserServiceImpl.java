@@ -1,5 +1,6 @@
 package com.stockcontrolathome.authentication.service.impl;
 
+import com.stockcontrolathome.authentication.dto.user.request.ModifyPasswordRequest;
 import com.stockcontrolathome.authentication.dto.user.request.RegisterUserRequest;
 import com.stockcontrolathome.authentication.dto.user.response.UserInformationResponse;
 import com.stockcontrolathome.authentication.entity.Role;
@@ -17,6 +18,7 @@ import com.stockcontrolathome.authentication.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @AllArgsConstructor
@@ -60,6 +62,21 @@ public class UserServiceImpl implements UserService {
     public UserInformationResponse getUserByEmail(String email) {
         User userObtained = userRepositoryCustom.getUserByEmail(email).orElseThrow(() -> new NonUserWithThisEmailException("No existe un usuario vinculado con el email: " + email));
         return this.userMapper.userEntityToUserInformationResponse(userObtained);
+    }
+
+    @Override
+    @Transactional
+    public void modifyPassword(ModifyPasswordRequest modifyPasswordRequest) {
+
+        String newEncryptedPassword = this.passwordEncoder.encode(modifyPasswordRequest.getNewPassword());
+
+        User userObtained = userRepositoryCustom.getUserByEmail(modifyPasswordRequest.getEmail()).orElseThrow(() -> new NonUserWithThisEmailException("No existe un usuario vinculado con el email: " + modifyPasswordRequest.getEmail()));
+
+        userObtained.setPassword(newEncryptedPassword);
+
+        this.userRepositoryCustom.createUser(userObtained);
+
+
     }
 
 }

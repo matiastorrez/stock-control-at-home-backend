@@ -7,24 +7,23 @@ import com.stockcontrolathome.authentication.audit.generic.repository.custom.Gen
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+//
 @Repository
 @AllArgsConstructor
 public class GenericAuditCustomRepositoryImpl
         <
-            ENTITY extends GenericAudit<STATE, STATE_TYPE>,
-            STATE extends GenericAuditEnum<STATE_TYPE>,
-            STATE_TYPE,
+            ENTITY extends GenericAudit<STATE_TYPE>,
+            STATE_TYPE extends GenericAuditEnum,
             ID
         >
-        implements GenericAuditCustomRepository<ENTITY, STATE, STATE_TYPE> {
+        implements GenericAuditCustomRepository<ENTITY, STATE_TYPE> {
 
 
-    private GenericAuditRepository<ENTITY,STATE,STATE_TYPE,ID> genericAuditRepository;
+    private GenericAuditRepository<ENTITY,STATE_TYPE,ID> genericAuditRepository;
 
     @Override
     public void saveGenericAudit(ENTITY genericAudit) {
         this.genericAuditRepository.save(genericAudit);
-
     }
 
 

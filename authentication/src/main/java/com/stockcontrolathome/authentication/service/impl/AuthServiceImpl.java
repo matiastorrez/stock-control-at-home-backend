@@ -4,16 +4,19 @@ import com.stockcontrolathome.authentication.audit.confirmregistrationtoken.enum
 import com.stockcontrolathome.authentication.config.authentication.resendconfirmregister.authentication.ResendConfirmRegisterAuthenticationToken;
 import com.stockcontrolathome.authentication.dto.confirmregistrationtoken.request.NewUserConfirmsRegistration;
 import com.stockcontrolathome.authentication.dto.confirmregistrationtoken.response.ConfirmRegistrationTokenResponse;
-import com.stockcontrolathome.authentication.dto.user.request.LoginUserRequest;
-import com.stockcontrolathome.authentication.dto.user.request.RegisterUserRequest;
-import com.stockcontrolathome.authentication.dto.user.request.ResendTokenForUserRequest;
+import com.stockcontrolathome.authentication.dto.passwordrecoverytoken.request.ConfirmRecoverPasswordRequest;
+import com.stockcontrolathome.authentication.dto.passwordrecoverytoken.response.PasswordRecoveryTokenResponse;
+import com.stockcontrolathome.authentication.dto.user.request.*;
+import com.stockcontrolathome.authentication.entity.PasswordRecoveryToken;
 import com.stockcontrolathome.authentication.enums.EConfirmRegistrationTokenState;
 import com.stockcontrolathome.authentication.exception.ConfirmRegistrationTokenNotFoundException;
+import com.stockcontrolathome.authentication.exception.PasswordRecoveryTokenNotFoundException;
 import com.stockcontrolathome.authentication.jwt.dto.JwtResponse;
 import com.stockcontrolathome.authentication.jwt.service.JwtService;
 import com.stockcontrolathome.authentication.mapper.ConfirmRegistrationTokenMapper;
 import com.stockcontrolathome.authentication.service.AuthService;
 import com.stockcontrolathome.authentication.service.ConfirmRegistrationTokenService;
+import com.stockcontrolathome.authentication.service.PasswordRecoveryTokenService;
 import com.stockcontrolathome.authentication.service.UserService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -35,6 +38,8 @@ public class AuthServiceImpl implements AuthService {
 
     private final UserService userService;
     private final ConfirmRegistrationTokenService confirmRegistrationTokenService;
+
+    private final PasswordRecoveryTokenService passwordRecoveryTokenService;
     private final AuthenticationManager authenticationManager;
 
     private final JwtService jwtService;
@@ -96,6 +101,22 @@ public class AuthServiceImpl implements AuthService {
     public void resendRegistrationConfirmation(ResendTokenForUserRequest resendTokenForUserRequest) {
         this.authenticationManager
                 .authenticate(new ResendConfirmRegisterAuthenticationToken(resendTokenForUserRequest.getEmail(), resendTokenForUserRequest.getPassword()));
+    }
+
+    @Override
+    public void recoverPassword(RecoverPasswordRequest recoverPasswordRequest) {
+        //verificamos que exista el email que se envio para recuperar la contraseña en nuestra base de datos
+        this.userService.getUserByEmail(recoverPasswordRequest.getEmail());
+        //creamos el registro que contiene el token y el email del que pidio la recuperacion de contraseña
+        this.passwordRecoveryTokenService.createPasswordRecoveryToken(recoverPasswordRequest.getEmail());
+    }
+
+    @Override
+    @Transactional
+    public void confirmRecoverPassword(ConfirmRecoverPasswordRequest confirmRecoverPasswordRequest) {
+        this.passwordRecoveryTokenService.confirmPasswordRecoveryToken(confirmRecoverPasswordRequest);
+        ModifyPasswordRequest modifyPasswordRequest = new ModifyPasswordRequest(confirmRecoverPasswordRequest.getEmail(),confirmRecoverPasswordRequest.getPassword());
+        this.userService.modifyPassword(modifyPasswordRequest);
     }
 
 

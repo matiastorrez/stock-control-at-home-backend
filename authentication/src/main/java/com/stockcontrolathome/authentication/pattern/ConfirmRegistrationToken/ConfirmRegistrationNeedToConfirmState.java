@@ -2,7 +2,6 @@ package com.stockcontrolathome.authentication.pattern.ConfirmRegistrationToken;
 
 
 import com.stockcontrolathome.authentication.enums.EConfirmRegistrationTokenState;
-import com.stockcontrolathome.authentication.exception.ConfirmRegistrationTokenExpiratedException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 

@@ -26,7 +26,7 @@ public class ConfirmRegistrationTokenServiceImpl implements ConfirmRegistrationT
     private final ConfirmRegistrationTokenMapper confirmRegistrationTokenMapper;
     private final NotificationService notificationService;
     private final CodeGenerator codeGenerator;
-    private final GenericAuditServiceImpl<AuditConfirmRegistrationTokenRequest, AuditConfirmRegistrationToken, EAuditConfirmRegistrationToken, String> auditConfirmRegistrationToken;
+    private final GenericAuditServiceImpl<AuditConfirmRegistrationTokenRequest, AuditConfirmRegistrationToken, EAuditConfirmRegistrationToken> auditConfirmRegistrationToken;
 
 
     @Override

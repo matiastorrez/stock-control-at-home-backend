@@ -1,4 +1,4 @@
-package com.stockcontrolathome.authentication;
+package com.stockcontrolathome.authentication.config.authentication.login;
 
 import com.stockcontrolathome.authentication.entity.Role;
 import com.stockcontrolathome.authentication.entity.User;
