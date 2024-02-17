@@ -17,4 +17,6 @@ public interface ConfirmRegistrationTokenService {
 
     void deleteUsedRegistrationConfirmationToken(String token, String email, EAuditConfirmRegistrationToken newStateForUsedToken);
 
+    void confirmRegistration(String email, String token);
+
 }

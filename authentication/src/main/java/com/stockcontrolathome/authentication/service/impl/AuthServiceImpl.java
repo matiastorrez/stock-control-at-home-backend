@@ -1,16 +1,9 @@
 package com.stockcontrolathome.authentication.service.impl;
 
-import com.stockcontrolathome.authentication.audit.confirmregistrationtoken.enums.EAuditConfirmRegistrationToken;
 import com.stockcontrolathome.authentication.config.authentication.resendconfirmregister.authentication.ResendConfirmRegisterAuthenticationToken;
 import com.stockcontrolathome.authentication.dto.confirmregistrationtoken.request.NewUserConfirmsRegistration;
-import com.stockcontrolathome.authentication.dto.confirmregistrationtoken.response.ConfirmRegistrationTokenResponse;
 import com.stockcontrolathome.authentication.dto.passwordrecoverytoken.request.ConfirmRecoverPasswordRequest;
-import com.stockcontrolathome.authentication.dto.passwordrecoverytoken.response.PasswordRecoveryTokenResponse;
 import com.stockcontrolathome.authentication.dto.user.request.*;
-import com.stockcontrolathome.authentication.entity.PasswordRecoveryToken;
-import com.stockcontrolathome.authentication.enums.EConfirmRegistrationTokenState;
-import com.stockcontrolathome.authentication.exception.ConfirmRegistrationTokenNotFoundException;
-import com.stockcontrolathome.authentication.exception.PasswordRecoveryTokenNotFoundException;
 import com.stockcontrolathome.authentication.jwt.dto.JwtResponse;
 import com.stockcontrolathome.authentication.jwt.service.JwtService;
 import com.stockcontrolathome.authentication.mapper.ConfirmRegistrationTokenMapper;
@@ -29,7 +22,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 
 @Service
 @AllArgsConstructor
@@ -38,12 +30,9 @@ public class AuthServiceImpl implements AuthService {
 
     private final UserService userService;
     private final ConfirmRegistrationTokenService confirmRegistrationTokenService;
-
     private final PasswordRecoveryTokenService passwordRecoveryTokenService;
     private final AuthenticationManager authenticationManager;
-
     private final JwtService jwtService;
-
     public static final String BAD_CREDENTIALS = "Algunas de sus credenciales son incorrectas";
 
 
@@ -60,19 +49,10 @@ public class AuthServiceImpl implements AuthService {
     @Transactional
     public JwtResponse confirmRegistration(NewUserConfirmsRegistration newUserConfirmsRegistration) {
 
-        //verificamos si existe la confirmacion con el token y el email que se mando
-        ConfirmRegistrationTokenResponse confirmRegistrationTokenResponse = this.confirmRegistrationTokenService.getConfirmRegistrationTokenByTokenAndEmailAndState(newUserConfirmsRegistration.getToken(), newUserConfirmsRegistration.getEmail(), EConfirmRegistrationTokenState.FALTA_CONFIRMAR);
-
-        //Verificamos si el token expiró
-        if (LocalDateTime.now().isAfter(confirmRegistrationTokenResponse.getExpiredDate())) {
-            throw new ConfirmRegistrationTokenNotFoundException("El token " + newUserConfirmsRegistration.getToken() + " vinculado a este email: " + newUserConfirmsRegistration.getEmail() + " expiró, para obtener un nuevo codigo debe iniciar sesion");
-        }
+        this.confirmRegistrationTokenService.confirmRegistration(newUserConfirmsRegistration.getEmail(),newUserConfirmsRegistration.getToken());
 
         //cambiamos el estado del usuario a REGISTRADO
         this.userService.modifyUserToConfirmRegister(newUserConfirmsRegistration.getEmail());
-
-        //eliminamos la confirmacion y lo guardamos en otra tabla para saber que existio
-        this.confirmRegistrationTokenService.deleteUsedRegistrationConfirmationToken(newUserConfirmsRegistration.getToken(), newUserConfirmsRegistration.getEmail(), EAuditConfirmRegistrationToken.CONFIRMADO);
 
         LoginUserRequest loginUserRequest = new LoginUserRequest(newUserConfirmsRegistration.getEmail(), newUserConfirmsRegistration.getPassword());//logueamos al usuario y devolvemos un JWT
 

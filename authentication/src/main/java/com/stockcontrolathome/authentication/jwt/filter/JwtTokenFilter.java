@@ -62,7 +62,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
 
         }catch (JwtException | AuthenticationException ja){
-            log.info("Estoy en JTWTokenFilter: " + ja.getMessage());
+            log.info("Estoy en JTWTokenFilter o AuthenticationException: " + ja.getMessage());
             resolver.resolveException(request, response, null, new JwtException("Problemas con el inicio de sesion, borre el token del encabezado e inicie sesion nuevamente"));
         }
     }

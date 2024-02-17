@@ -88,4 +88,26 @@ public class ConfirmRegistrationTokenServiceImpl implements ConfirmRegistrationT
         this.confirmRegistrationTokenRepositoryCustom.deleteByTokenAndEmailAndState(token, email, EConfirmRegistrationTokenState.FALTA_CONFIRMAR);
 
     }
+
+    @Override
+    @Transactional
+    public void confirmRegistration(String email, String token) {
+        //verificamos si existe la confirmacion con el token y el email que se mando
+        ConfirmRegistrationToken confirmRegistrationToken = this.confirmRegistrationTokenRepositoryCustom.getConfirmRegistrationTokenByTokenAndEmailAndState(token, email, EConfirmRegistrationTokenState.FALTA_CONFIRMAR)
+                .orElseThrow(() -> new ConfirmRegistrationTokenNotFoundException("No se encontró el codigo: " + token + " para el usuario con email: " + email));
+
+        //Verificamos si el token expiró
+        if (LocalDateTime.now().isAfter(confirmRegistrationToken.getExpiredDate())) {
+            throw new ConfirmRegistrationTokenNotFoundException("El token " + confirmRegistrationToken.getToken() + " vinculado a este email: " + confirmRegistrationToken.getEmail() + " expiró, para obtener un nuevo codigo debe iniciar sesion");
+        }
+
+        //eliminamos la confirmacion y lo guardamos en otra tabla para saber que existio
+        AuditConfirmRegistrationTokenRequest request = this.confirmRegistrationTokenMapper.confirmRegistrationTokenEntityToAuditConfirmRegistrationTokenRequest(confirmRegistrationToken,EAuditConfirmRegistrationToken.CONFIRMADO);
+
+        this.auditConfirmRegistrationToken.saveGenericAudit(request);
+
+        this.confirmRegistrationTokenRepositoryCustom.deleteByTokenAndEmailAndState(token, email, EConfirmRegistrationTokenState.FALTA_CONFIRMAR);
+
+
+    }
 }

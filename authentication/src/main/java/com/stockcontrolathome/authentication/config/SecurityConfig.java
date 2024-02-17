@@ -26,16 +26,12 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig {
     @Autowired
     private UserDetailServiceImpl userDetailServiceImpl;
-
     @Autowired
     private ResendConfirmRegisterTokenService resendConfirmRegisterTokenService;
-
-
     @Bean
     public JwtTokenFilter jwtTokenFilter() {
         return new JwtTokenFilter();
     }
-
     @Bean
     PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
